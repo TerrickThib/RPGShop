@@ -8,8 +8,7 @@ namespace HelloWorld
     {
         public string name;
         public int cost;        
-    }
-    //test
+    }    
     class Game
     {
         private Player _player;
@@ -34,11 +33,11 @@ namespace HelloWorld
 
         private void InitItems()
         {
-            _arrow.name = "Arrow";
+            _arrow.name = "Arrow ";
             _arrow.cost = 10;
-            _shield.name = "Shield";
+            _shield.name = "Shield ";
             _shield.cost = 15;
-            _gem.name = "Ghem";
+            _gem.name = "Ghem ";
             _gem.cost = 50;
         }
 
