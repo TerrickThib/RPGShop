@@ -7,9 +7,9 @@ namespace HelloWorld
     struct Item
     {
         public string name;
-        public int cost;
+        public int cost;        
     }
-
+    //test
     class Game
     {
         private Player _player;
