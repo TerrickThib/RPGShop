@@ -24,7 +24,7 @@ namespace HelloWorld
             _inventory = items;
         }
 
-        public bool Sell(Player player,int itemIndex, int playerIndex)
+        public bool Sell(Player player,int itemIndex)
         {
             //Find the item to buy in the inventory array
             Item itemToBuy = _inventory[itemIndex];

@@ -13,13 +13,17 @@ namespace HelloWorld
     {
         private Player _player;
         private Shop _shop;
-        private Item _arrow;
-        private Item _shield;
-        private Item _gem;
+        private Item arrow;
+        private Item shield;
+        private Item gem;
         private Item[] _shopInventory;
         private bool _gameOver;
         private int _currentScene;
-
+        struct Item
+        {
+            public string Name;
+            public int Cost;
+        }
         //Run the game
         public void Run()
         {
@@ -35,19 +39,17 @@ namespace HelloWorld
 
         private void InitializeItems()
         {
-            _arrow.name = "Arrow ";
-            _arrow.cost = 10;
-            _shield.name = "Shield ";
-            _shield.cost = 15;
-            _gem.name = "Ghem ";
-            _gem.cost = 50;
+            Item arrow = new Item { Name = "Arrow", Cost = 10 };
+            Item shield = new Item { Name = "Shield", Cost = 25 };
+            Item gem = new Item { Name = "Gem", Cost = 50 };
+            
         }
 
         public void PrintInventory(Item[] inventory)
         {
             for(int i = 0; i < inventory.Length; i++)
             {
-                Console.WriteLine((i + 1) + ". " + inventory[i].name + inventory[i].cost);
+                Console.WriteLine((i + 1) + ". " + inventory[i].Name + inventory[i].Cost);
             }
         }
 
@@ -72,7 +74,7 @@ namespace HelloWorld
             _gameOver = false;
             _player = new Player();
             InitializeItems();
-            _shopInventory = new Item[] { _arrow, _shield, _gem };
+            _shopInventory = new Item[] { arrow, shield, gem };
             _shop = new Shop(_shopInventory);
             _currentScene = 0;
         }
@@ -152,83 +154,23 @@ namespace HelloWorld
         }
         //Alows player to buy item
         private void GetShopMenuOptions()
-        {                       
-            //Pulls the item list from the shop class and displays it.
+        {
+            //Pulls the item list from the shop class and displays it.            
             int input = GetInput("Items To Buy.", _shop.GetItemNames());
 
             if(input == 0)
             {
-                _player.Buy(_arrow, input);
-                                
+                _player.Buy(arrow, input);                
             }
             else if(input == 1)
             {
-                _player.Buy(_shield, input);
-                
+                _player.Buy(Item.shield, input);                
             }
             else if(input == 2)
             {
-                _player.Buy(_gem, input);
-                
+                _player.Buy(_gem, input);                
             }
-                            
-            //Set itemIndex to be the index the player selected
-            int itemIndex = -1;
-            switch (input)
-            {
-                case '1':
-                    {
-                        itemIndex = 0;
-                        break;
-                    }
-                case '2':
-                    {
-                        itemIndex = 1;
-                        break;
-                    }
-                case '3':
-                    {
-                        itemIndex = 2;
-                        break;
-                    }
-                default:
-                    {
-                        return  ;
-                    }
-            }
-                        
-            //Ask the player to replace a slot in their own inventory
-            Console.WriteLine("Choose a slot to replace.");
-            PrintInventory(_player.GetInventory());
-            //Get player input
-            input = Console.ReadKey().KeyChar;
-
-            //Set the value of the playerIndex based on the player's choice
-            int playerIndex = -1;
-            switch (input)
-            {
-                case '1':
-                    {
-                        playerIndex = 0;
-                        break;
-                    }
-                case '2':
-                    {
-                        playerIndex = 1;
-                        break;
-                    }
-                case '3':
-                    {
-                        playerIndex = 2;
-                        break;
-                    }
-                default:
-                    {
-                        return;
-                    }
-            }
-            //sell item to player and replace the weapon at the index with the newly purchased weapon
-            _shop.Sell(_player, itemIndex, playerIndex);
+                                                                
         }
         public void DisplayOpeningMenu()
         {

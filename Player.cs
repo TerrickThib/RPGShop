@@ -26,6 +26,7 @@ namespace HelloWorld
                 //Place item in inventory array.
                 _inventory[inventoryIndex] = item;
                 Console.WriteLine("You Purchased A Item");
+                
             }   
             else if(_gold < item.cost)
             {
