@@ -27,8 +27,7 @@ namespace HelloWorld
                 _inventory[inventoryIndex] = item;
                 return true;
             }
-
-            return false;
+            return true;
         }
 
         public int GetGold()
@@ -40,5 +39,6 @@ namespace HelloWorld
         {
             return _inventory;
         }
+
     }
 }

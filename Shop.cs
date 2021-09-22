@@ -8,13 +8,15 @@ namespace HelloWorld
     {
         private int _gold;
         private Item[] _inventory;
+        
+
 
         public Shop()
         {
             _gold = 100;
             _inventory = new Item[3];
         }
-
+        
         public Shop(Item[] items)
         {
             _gold = 100;
@@ -26,7 +28,7 @@ namespace HelloWorld
         {
             //Find the item to buy in the inventory array
             Item itemToBuy = _inventory[itemIndex];
-            //Check to see if the player ourchased the item successfully.
+            //Check to see if the player purchased the item successfully.
             if(player.Buy(itemToBuy, playerIndex))
             {
                 //Increase shops gold by item cost to complete the transaction
@@ -35,5 +37,7 @@ namespace HelloWorld
             }
             return false;
         }
+        
     }
+
 }

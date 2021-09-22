@@ -18,6 +18,8 @@ namespace HelloWorld
         private Item _gem;
         private Item[] _shopInventory;
         private bool _gameOver;
+        private int _currentScene;
+
         //Run the game
         public void Run()
         {
@@ -31,7 +33,7 @@ namespace HelloWorld
             End();
         }
 
-        private void InitItems()
+        private void InitializeItems()
         {
             _arrow.name = "Arrow ";
             _arrow.cost = 10;
@@ -49,15 +51,114 @@ namespace HelloWorld
             }
         }
 
-        private void OpenShopMenu()
+        private void DisplayShopMenu()
         {
-            //Print a welcome message and all the choices to the screen
-            Console.WriteLine("Welcome! Please selct an item.");
-            PrintInventory(_shopInventory);
+            int choice = GetInput("Welcome to Choose Goose Shop where all we got is a sock. ", "Buy Items", "Check Player Gold");
+            if (choice == 0)
+            {
+                _currentScene = _currentScene++;
+            }
+            else if (choice == 1)
+            {
+                
+            }
+                                        
+            
+        }
 
-            //Get player input
-            char input = Console.ReadKey().KeyChar;
+        //Performed once when the game begins
+        public void Start()
+        {
+            _gameOver = false;
+            _player = new Player();
+            InitializeItems();
+            _shopInventory = new Item[] { _arrow, _shield, _gem };
+            _shop = new Shop(_shopInventory);
+            _currentScene = 0;
+        }
+        
+        //Repeated until the game ends
+        public void Update()
+        {
+            DisplayCurrentScene();
+        }
 
+        //Performed once when the game ends
+        public void End()
+        {
+            
+        }
+         //Get input Function 
+        private int GetInput(string description, params string[] options)
+        {
+            string input = "";
+            int inputReceived = -1;
+
+            while (inputReceived == -1)
+            {
+                //Print all of the options
+                Console.WriteLine(description);
+                for (int i = 0; i < options.Length; i++)
+                {
+                    Console.WriteLine((i + 1) + ". " + options[i]);
+                }
+                Console.Write("> ");
+
+                //Gets players input
+                input = Console.ReadLine();
+
+                //If the player typed an int...
+                if (int.TryParse(input, out inputReceived))
+                {
+                    //...decrement the input and check if its within the bounds of the array if they choose 1 they atwally choose 0 in the array
+                    inputReceived--;
+                    if (inputReceived < 0 || inputReceived >= options.Length)
+                    {
+                        //sets input recived to be the default value
+                        inputReceived = -1;
+                        //Displays a error message
+                        Console.WriteLine("Invalid Input");
+                        Console.ReadKey(true);
+                    }
+                }
+                //If the player didnt type an int
+                else
+                {
+                    //Set input recived to be the default value
+                    inputReceived = -1;
+                    Console.WriteLine("Invalid Input");
+                    Console.ReadKey(true);
+                }
+
+                Console.Clear();
+            }
+            return inputReceived;
+        }
+        private void DisplayCurrentScene()
+        {
+            switch(_currentScene++)
+            {
+                case 1:
+                    DisplayOpeningMenu();
+                    break;
+                case 2:
+                    DisplayShopMenu();
+                    break;
+                case 3:
+                    GetShopMenuOptions();
+                    break;
+            }
+
+        }
+        private void GetShopMenuOptions()
+        {
+            int input = GetInput("Items To Buy.", "arrow", "taco");
+            
+            if (input ==1)
+            {
+                _currentScene = 0;
+            }
+            
             //Set itemIndex to be the indec the player selected
             int itemIndex = -1;
             switch (input)
@@ -79,17 +180,17 @@ namespace HelloWorld
                     }
                 default:
                     {
-                        return;
+                        return ;
                     }
             }
 
             //If the player can't afford the item print a message to let them know
-            if(_player.GetGold() < _shopInventory[itemIndex].cost)
+            if (_player.GetGold() < _shopInventory[itemIndex].cost)
             {
                 Console.WriteLine("You cant afford this.");
                 return;
             }
-            
+
             //Ask the player to replace a slot in their own inventory
             Console.WriteLine("Choose a slot to replace.");
             PrintInventory(_player.GetInventory());
@@ -124,27 +225,17 @@ namespace HelloWorld
             //Sell item to player and replace the weapon at the index with the newly purchased weapon
             _shop.Sell(_player, itemIndex, playerIndex);
         }
-
-        //Performed once when the game begins
-        public void Start()
+        public void DisplayOpeningMenu()
         {
-            _gameOver = false;
-            _player = new Player();
-            InitItems();
-            _shopInventory = new Item[]{_arrow,_shield, _gem };
-            _shop = new Shop(_shopInventory);
-        }
-
-        //Repeated until the game ends
-        public void Update()
-        {
-            OpenShopMenu();
-        }
-
-        //Performed once when the game ends
-        public void End()
-        {
-            
+            int choice = GetInput("Welcome To Test Shop ", "Start New Game", "Load Game");
+            if (choice == 0)
+            {
+                _currentScene = _currentScene++;
+            }
+            else if (choice == 1)
+            {
+                //Load input
+            }
         }
     }
 }
