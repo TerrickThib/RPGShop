@@ -8,8 +8,8 @@ namespace HelloWorld
     {
         private int _gold;
         private Item[] _inventory;
-        
-
+        public string name;
+        public int cost;
 
         public Shop()
         {
@@ -28,16 +28,26 @@ namespace HelloWorld
         {
             //Find the item to buy in the inventory array
             Item itemToBuy = _inventory[itemIndex];
-            //Check to see if the player purchased the item successfully.
-            if(player.Buy(itemToBuy, playerIndex))
+            //Check to see if the player has anofe gold
+            if (player.Gold() >= itemToBuy.cost)
             {
                 //Increase shops gold by item cost to complete the transaction
                 _gold += itemToBuy.cost;
                 return true;
             }
-            return false;
+            return true;
         }
-        
+        public string[] GetItemNames()
+        {
+            string[] itemNames = new string[_inventory.Length];
+
+            for (int i = 0; i < _inventory.Length; i++)
+            {
+                itemNames[i] = _inventory[i].name;
+            }
+
+            return itemNames;
+        }
     }
 
 }

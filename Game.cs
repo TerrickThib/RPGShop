@@ -150,16 +150,29 @@ namespace HelloWorld
             }
 
         }
+        //Alows player to buy item
         private void GetShopMenuOptions()
-        {
-            int input = GetInput("Items To Buy.", "arrow", "taco");
-            
-            if (input ==1)
+        {                       
+            //Pulls the item list from the shop class and displays it.
+            int input = GetInput("Items To Buy.", _shop.GetItemNames());
+
+            if(input == 0)
             {
-                _currentScene = 0;
+                _player.Buy(_arrow, input);
+                                
             }
-            
-            //Set itemIndex to be the indec the player selected
+            else if(input == 1)
+            {
+                _player.Buy(_shield, input);
+                
+            }
+            else if(input == 2)
+            {
+                _player.Buy(_gem, input);
+                
+            }
+                            
+            //Set itemIndex to be the index the player selected
             int itemIndex = -1;
             switch (input)
             {
@@ -180,17 +193,10 @@ namespace HelloWorld
                     }
                 default:
                     {
-                        return ;
+                        return  ;
                     }
             }
-
-            //If the player can't afford the item print a message to let them know
-            if (_player.GetGold() < _shopInventory[itemIndex].cost)
-            {
-                Console.WriteLine("You cant afford this.");
-                return;
-            }
-
+                        
             //Ask the player to replace a slot in their own inventory
             Console.WriteLine("Choose a slot to replace.");
             PrintInventory(_player.GetInventory());
@@ -221,8 +227,7 @@ namespace HelloWorld
                         return;
                     }
             }
-
-            //Sell item to player and replace the weapon at the index with the newly purchased weapon
+            //sell item to player and replace the weapon at the index with the newly purchased weapon
             _shop.Sell(_player, itemIndex, playerIndex);
         }
         public void DisplayOpeningMenu()

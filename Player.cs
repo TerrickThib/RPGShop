@@ -16,7 +16,7 @@ namespace HelloWorld
             _inventory = new Item[3];
         }
 
-        public bool Buy(Item item, int inventoryIndex)
+        public void Buy(Item item, int inventoryIndex)
         {
             //Check to see if the player can afford the item
             if(_gold >= item.cost)
@@ -25,20 +25,34 @@ namespace HelloWorld
                 _gold -= item.cost;
                 //Place item in inventory array.
                 _inventory[inventoryIndex] = item;
-                return true;
+                Console.WriteLine("You Purchased A Item");
+            }   
+            else if(_gold < item.cost)
+            {
+                Console.WriteLine("You Broke");
+                return;
             }
-            return true;
         }
 
-        public int GetGold()
-        {
-            return _gold;
+        public int Gold()
+        {            
+           return _gold;                           
         }
 
         public Item[] GetInventory()
         {
             return _inventory;
         }
+        public string[] GetItemNames()
+        {
+            string[] itemNames = new string[_inventory.Length];
 
+            for (int i = 0; i < _inventory.Length; i++)
+            {
+                itemNames[i] = _inventory[i].name;
+            }
+            return itemNames;
+        }
+        
     }
 }
