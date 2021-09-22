@@ -19,16 +19,16 @@ namespace HelloWorld
         public void Buy(Item item, int inventoryIndex)
         {
             //Check to see if the player can afford the item
-            if(_gold >= item.cost)
+            if(_gold >= item.Cost)
             {
                 //Pay for item.
-                _gold -= item.cost;
+                _gold -= item.Cost;
                 //Place item in inventory array.
                 _inventory[inventoryIndex] = item;
                 Console.WriteLine("You Purchased A Item");
                 
             }   
-            else if(_gold < item.cost)
+            else if(_gold < item.Cost)
             {
                 Console.WriteLine("You Broke");
                 return;
@@ -50,7 +50,7 @@ namespace HelloWorld
 
             for (int i = 0; i < _inventory.Length; i++)
             {
-                itemNames[i] = _inventory[i].name;
+                itemNames[i] = _inventory[i].Name;
             }
             return itemNames;
         }

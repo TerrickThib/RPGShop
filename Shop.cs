@@ -29,10 +29,10 @@ namespace HelloWorld
             //Find the item to buy in the inventory array
             Item itemToBuy = _inventory[itemIndex];
             //Check to see if the player has anofe gold
-            if (player.Gold() >= itemToBuy.cost)
+            if (player.Gold() >= itemToBuy.Cost)
             {
                 //Increase shops gold by item cost to complete the transaction
-                _gold += itemToBuy.cost;
+                _gold += itemToBuy.Cost;
                 return true;
             }
             return true;
@@ -43,7 +43,7 @@ namespace HelloWorld
 
             for (int i = 0; i < _inventory.Length; i++)
             {
-                itemNames[i] = _inventory[i].name;
+                itemNames[i] = _inventory[i].Name;
             }
 
             return itemNames;

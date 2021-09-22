@@ -6,9 +6,9 @@ namespace HelloWorld
 {
     struct Item
     {
-        public string name;
-        public int cost;        
-    }    
+        public string Name;
+        public int Cost;
+    }
     class Game
     {
         private Player _player;
@@ -19,11 +19,7 @@ namespace HelloWorld
         private Item[] _shopInventory;
         private bool _gameOver;
         private int _currentScene;
-        struct Item
-        {
-            public string Name;
-            public int Cost;
-        }
+        
         //Run the game
         public void Run()
         {
@@ -39,9 +35,9 @@ namespace HelloWorld
 
         private void InitializeItems()
         {
-            Item arrow = new Item { Name = "Arrow", Cost = 10 };
-            Item shield = new Item { Name = "Shield", Cost = 25 };
-            Item gem = new Item { Name = "Gem", Cost = 50 };
+             arrow = new Item { Name = "Arrow", Cost = 10 };
+             shield = new Item { Name = "Shield", Cost = 25 };
+             gem = new Item { Name = "Gem", Cost = 50 };
             
         }
 
@@ -62,7 +58,7 @@ namespace HelloWorld
             }
             else if (choice == 1)
             {
-                
+                Console.WriteLine("Player Gold: " + _player.Gold());
             }
                                         
             
@@ -155,6 +151,7 @@ namespace HelloWorld
         //Alows player to buy item
         private void GetShopMenuOptions()
         {
+            Console.WriteLine("Player Gold: "+ _player.Gold());
             //Pulls the item list from the shop class and displays it.            
             int input = GetInput("Items To Buy.", _shop.GetItemNames());
 
@@ -164,12 +161,13 @@ namespace HelloWorld
             }
             else if(input == 1)
             {
-                _player.Buy(Item.shield, input);                
+                _player.Buy(shield, input);                
             }
             else if(input == 2)
             {
-                _player.Buy(_gem, input);                
+                _player.Buy(gem, input);                
             }
+
                                                                 
         }
         public void DisplayOpeningMenu()
