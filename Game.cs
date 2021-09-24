@@ -167,6 +167,15 @@ namespace HelloWorld
             {
                 _player.Buy(gem, input);                
             }
+            
+            Item[] playerInventory =_player.GetInventory();
+
+            for (int i = 0; i < playerInventory.Length; i++)
+            {
+                //Console.WriteLine($"{i + 1}: {playerInventory[i].Name}");
+                Console.WriteLine((i + 1) + ". " + playerInventory[i].Name);
+                
+            }
 
                                                                 
         }
