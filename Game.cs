@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.IO;
 
 namespace HelloWorld
 {
@@ -24,10 +25,10 @@ namespace HelloWorld
         public void Run()
         {
             Start();
-
             while(_gameOver == false)
             {
                 Update();
+
             }
 
             End();
@@ -59,6 +60,8 @@ namespace HelloWorld
             else if (choice == 1)
             {
                 Console.WriteLine("Player Gold: " + _player.Gold());
+                Console.ReadKey();
+                Console.Clear();
             }
                                         
             
@@ -84,7 +87,10 @@ namespace HelloWorld
         //Performed once when the game ends
         public void End()
         {
-            
+            Console.ReadKey();
+            Console.Clear();
+            Console.WriteLine("No More Shop For UUUU");
+            Console.ReadKey();
         }
          //Get input Function 
         private int GetInput(string description, params string[] options)
@@ -167,17 +173,16 @@ namespace HelloWorld
             {
                 _player.Buy(gem, input);                
             }
-            
-            Item[] playerInventory =_player.GetInventory();
 
+            //Gets players Inventory and displays it.
+            Item[] playerInventory =_player.GetInventory();
+            //increments each item in players inventory
             for (int i = 0; i < playerInventory.Length; i++)
             {
                 //Console.WriteLine($"{i + 1}: {playerInventory[i].Name}");
-                Console.WriteLine((i + 1) + ". " + playerInventory[i].Name);
-                
+                Console.WriteLine((i + 1) + ". " + playerInventory[i].Name);                
             }
-
-                                                                
+            _gameOver = true;
         }
         public void DisplayOpeningMenu()
         {
@@ -190,6 +195,53 @@ namespace HelloWorld
             {
                 //Load input
             }
+        }
+        private void Save()
+        {
+            //Create a new stream writer
+            StreamWriter writer = new StreamWriter("SaveData.txt");
+
+            //Saves players stats
+            _player.Save(writer);
+
+            //Saves shops inventory
+            writer.WriteLine(_shopInventory.Length);
+
+            for (int i = 0; i < _shopInventory.Length; i++)
+            {
+                writer.WriteLine(_shopInventory[i].Name);
+                writer.WriteLine(_shopInventory[i].Cost);
+            }
+
+            
+
+            //Closes the writer when done saving
+            writer.Close();
+        }
+        private bool Load()
+        {
+            bool loadSuccessful = true;
+
+            //If File doesnot exist
+            if (!File.Exists("SaveData.txt"))
+                //Return false
+                loadSuccessful = false;
+
+            //Creates a new reader to read from the text file
+            StreamReader reader = new StreamReader("SaveData.txt");
+
+            //Load shop INventory
+            string ShopInventoryLength = Console.ReadLine();
+
+            _shopInventory = new Item[int.Parse(ShopInventoryLength)];
+
+            for (int i = 0; i < _shopInventory.Length; i++)
+            {
+                _shopInventory[i].Name = reader.ReadLine();
+                _shopInventory[i].Cost = int.Parse(reader.ReadLine());
+            }
+            loadSuccessful = false;
+            
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.IO;
 
 namespace HelloWorld
 {
@@ -54,6 +55,15 @@ namespace HelloWorld
             }
             return itemNames;
         }
-        
+        public void Save(StreamWriter writer)
+        {
+            //Saves players gold and inventory
+            writer.WriteLine(Gold());
+            writer.WriteLine(_inventory);
+        }
+        public bool Load(StreamReader reader)
+        {
+            return false;
+        }
     }
 }
